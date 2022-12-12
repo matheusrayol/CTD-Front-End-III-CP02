@@ -1,11 +1,11 @@
 import DetailCard from "../Components/DetailCard";
 
 const Detail = () => {
-  return (
-    <>
-      <DetailCard />
-    </>
-  )
+	return (
+		<>
+			<DetailCard />
+		</>
+	)
 }
 
 export default Detail

@@ -10,9 +10,9 @@ import "./index.css";
 const root = ReactDOM.createRoot(document.getElementById("root"));
 //Lembre-se de configurar suas rotas e seu contexto aqui
 root.render(
-  <React.StrictMode>
-    <Navbar />
-    <Home />
-    <Footer />
-  </React.StrictMode>
+	<React.StrictMode>
+		<Navbar />
+		<Home />
+		<Footer />
+	</React.StrictMode>
 );
