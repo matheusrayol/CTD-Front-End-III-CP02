@@ -1,4 +1,4 @@
-import styles from "./Form.module.css";
+import styles from "./style.module.css";
 
 const LoginForm = () => {
   const handleSubmit = (e) => {

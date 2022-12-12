@@ -1,7 +1,3 @@
-.navbarBrand {
-  font-size: 30px;
-}
-
 .navbarBrand::first-letter {
   color: #f21d1d;
 }
