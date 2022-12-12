@@ -1,38 +1,23 @@
-.footerWrapper {
-	margin-top: auto;
-}
-
 .top {
-	text-transform: uppercase;
-	padding: 1rem;
-	background: #f21d1d;
-	border: none;
+	border: 0;
+	background-color: blueviolet;
 	color: white;
-	margin-top: 2rem;
-	width: 100%;
-}
-
-.footer {
-	padding: 2rem 0;
-}
-
-.icons {
-	display: flex;
-	justify-content: flex-end;
-	align-items: flex-start;
-	gap: 1rem;
-	filter: brightness(0);
-}
-
-.iconsDark {
-	filter: brightness(0) invert(1);
+	width: 40px;
+	height: 40px;
+	position: fixed;
+	bottom: 40px;
+	right: 40px;
+	border-radius: 50px;
+	text-align: center;
 }
 
 .dhLogo {
-	max-width: 50%;
+	width: 300px;
+	max-width: 100%;
 }
 
 .icon {
+	width: 1.5rem;
 	max-width: 2rem;
 	height: auto;
 }
