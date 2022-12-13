@@ -7,8 +7,8 @@ const Footer = () => {
 	return (
 		<footer>
 			<button className={styles.top} onClick={scrollToTop}>
-				<svg class="bi bi-chevron-up" xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" fill="currentColor" viewBox="0 0 16 16">
-					<path fill-rule="evenodd" d="M7.646 4.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1-.708.708L8 5.707l-5.646 5.647a.5.5 0 0 1-.708-.708l6-6z"></path>
+				<svg className={`bi bi-chevron-up`} xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" fill="currentColor" viewBox="0 0 16 16">
+					<path fillRule="evenodd" d="M7.646 4.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1-.708.708L8 5.707l-5.646 5.647a.5.5 0 0 1-.708-.708l6-6z"></path>
 				</svg>
 			</button>
 			<div className={`container`}>
@@ -43,7 +43,7 @@ const Footer = () => {
 							</li>
 							<li className={`list-inline-item`}>
 								<svg className={`${styles.icon} bi bi-tiktok`} xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" fill="currentColor" viewBox="0 0 16 16">
-									<path fill-rule="evenodd" d="m9 1 1.98-.196c.144.715.54 1.813 1.235 2.708C12.895 4.389 13.797 5 15 5v2c-1.753 0-3.07-.814-4-1.829V12a5 5 0 1 1-5-5v2a3 3 0 1 0 3 3V1Z"></path>
+									<path fillRule="evenodd" d="m9 1 1.98-.196c.144.715.54 1.813 1.235 2.708C12.895 4.389 13.797 5 15 5v2c-1.753 0-3.07-.814-4-1.829V12a5 5 0 1 1-5-5v2a3 3 0 1 0 3 3V1Z"></path>
 								</svg>
 							</li>
 						</ul>

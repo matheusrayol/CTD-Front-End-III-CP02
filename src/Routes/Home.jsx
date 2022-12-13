@@ -1,12 +1,17 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import Card from "../Components/Card";
 
 const Home = () => {
+	const [dentista, setDentista] = useState([]);
 
 	useEffect(() => {
-		//Nesse useEffect, deverá ser obtido todos os dentistas da API
-		//Armazena-los em um estado para posteriormente fazer um map
-		//Usando o componente <Card />
+		try {
+			fetch("https://dhodonto.ctdprojetos.com.br/dentista")
+				.then((response) => response.json())
+				.then((data) => setDentista(data));
+		} catch (error) {
+			console.log(error);
+		}
 	}, []);
 
 	return (
@@ -19,7 +24,7 @@ const Home = () => {
 					</div>
 				</div>
 				<div className={`row gy-4 row-cols-1 row-cols-md-2 row-cols-lg-3 row-cols-xl-4`}>
-					<Card />
+					{dentista.length ? dentista.map((dentista) => (<Card {...dentista} key={dentista.matricula} />)) : (<div className={`col`}>Carregando...</div>)}
 				</div>
 			</div>
 		</section>

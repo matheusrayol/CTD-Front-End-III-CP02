@@ -1,56 +1,64 @@
-import { useEffect } from "react";
+import { useContext, useEffect, useState } from "react";
+import { useParams } from "react-router-dom";
+import { GlobalContext } from "../../Contexts/GlobalContext";
+
 import ScheduleFormModal from "../ScheduleFormModal";
+
 import styles from "./styles.module.css";
 
 const DetailCard = () => {
+	const { id } = useParams();
+	const [dentista, setDentista] = useState(undefined);
+	const { theme } = useContext(GlobalContext);
+	const isDarkMode = theme === "dark" || false;
 
 	useEffect(() => {
-		//Nesse useEffect, você vai fazer um fetch na api passando o 
-		//id do dentista que está vindo do react-router e carregar os dados em algum estado
-	}, []);
+		async function fetchData() {
+			fetch(`https://dhodonto.ctdprojetos.com.br/dentista?matricula=${id}`)
+				.then((response) => response.json())
+				.then((data) => {
+					setDentista(data);
+				});
+		}
+		fetchData();
+	}, [id]);
 	return (
-		//As instruções que estão com {''} precisam ser 
-		//substituídas com as informações que vem da api
 		<>
-			<h1>Detail about Dentist {'Nome do Dentista'} </h1>
-			<section className="card col-sm-12 col-lg-6 container">
-				{/* //Na linha seguinte deverá ser feito um teste se a aplicação
-		// está em dark mode e deverá utilizar o css correto */}
-				<div
-					className={`card-body row`}
-				>
-					<div className="col-sm-12 col-lg-6">
-						<img
-							className="card-img-top"
-							src="/images/doctor.jpg"
-							alt="doctor placeholder"
-						/>
-					</div>
-					<div className="col-sm-12 col-lg-6">
-						<ul className="list-group">
-							<li className="list-group-item">Nome: {'Nome do Dentista'}</li>
-							<li className="list-group-item">
-								Sobrenome: {'Sobrenome do Dentista'}
-							</li>
-							<li className="list-group-item">
-								Usuário: {'Nome de usuário do Dentista'}
-							</li>
-						</ul>
-						<div className="text-center">
-							{/* //Na linha seguinte deverá ser feito um teste se a aplicação
-			  // está em dark mode e deverá utilizado o css correto */}
-							<button
-								data-bs-toggle="modal"
-								data-bs-target="#exampleModal"
-								className={`btn btn-light ${styles.button
-									}`}
-							>
-								Marcar consulta
-							</button>
+			{dentista ? (
+				<>
+					<section className={`py-5`}>
+						<div className={`container`}>
+							<div className={`row`}>
+								<div className={`col-md-6 text-center`}>
+									<img className={`img-fluid w-100`} src="../images/doctor.jpg" alt={dentista.nome} />
+								</div>
+								<div className={`col-md-5 col-xl-4 text-center text-md-start`}>
+									<h2 className={`display-6 fw-bold mb-5`}>
+										<span className={`underline pb-1`}>{dentista.nome}</span>
+									</h2>
+									<ul className={`list-group`}>
+										<li className={`list-group-item`}>
+											<span>{dentista.nome}</span>
+										</li>
+										<li className={`list-group-item`}>
+											<span>{dentista.sobrenome}</span>
+										</li>
+										<li className={`list-group-item`}>
+											<span>{dentista.usuario.username}</span>
+										</li>
+									</ul>
+									<form method="post">
+										<div className={`mb-3`}></div>
+										<div className={`text-center mb-5`}>
+											<button className={`btn btn-primary shadow`} data-bs-toggle="modal" data-bs-target="#exampleModal">Marcar Consulta</button>
+										</div>
+									</form>
+								</div>
+							</div>
 						</div>
-					</div>
-				</div>
-			</section>
+					</section>
+				</>
+			) : null}
 			<ScheduleFormModal />
 		</>
 	);
