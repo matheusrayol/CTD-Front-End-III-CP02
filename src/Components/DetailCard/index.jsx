@@ -26,11 +26,11 @@ const DetailCard = () => {
 		<>
 			{dentista ? (
 				<>
-					<section className={`py-5`}>
+					<section className={`mt-2d-grid align-items-center`} style={{ height: "80vh" }}>
 						<div className={`container`}>
 							<div className={`row`}>
 								<div className={`col-md-6 text-center`}>
-									<img className={`img-fluid w-100`} src="../images/doctor.jpg" alt={dentista.nome} />
+									<img className={`img-fluid w-50`} src="../images/doctor.jpg" alt={dentista.nome} />
 								</div>
 								<div className={`col-md-5 col-xl-4 text-center text-md-start`}>
 									<h2 className={`display-6 fw-bold mb-5`}>
@@ -38,21 +38,19 @@ const DetailCard = () => {
 									</h2>
 									<ul className={`list-group`}>
 										<li className={`list-group-item`}>
-											<span>{dentista.nome}</span>
+											Nome: <span>{dentista.nome}</span>
 										</li>
 										<li className={`list-group-item`}>
-											<span>{dentista.sobrenome}</span>
+											Sobrenome: <span>{dentista.sobrenome}</span>
 										</li>
 										<li className={`list-group-item`}>
-											<span>{dentista.usuario.username}</span>
+											Usuário: <span>{dentista.usuario.username}</span>
 										</li>
 									</ul>
-									<form method="post">
-										<div className={`mb-3`}></div>
-										<div className={`text-center mb-5`}>
-											<button className={`btn btn-primary shadow`} data-bs-toggle="modal" data-bs-target="#exampleModal">Marcar Consulta</button>
-										</div>
-									</form>
+									<div className={`mb-3`}></div>
+									<div className={`text-center mb-5`}>
+										<button className={`btn shadow`} data-bs-toggle="modal" data-bs-target="#exampleModal">Marcar Consulta</button>
+									</div>
 								</div>
 							</div>
 						</div>

@@ -15,7 +15,6 @@ const Home = () => {
 	}, []);
 
 	return (
-
 		<section className={`py-0`}>
 			<div className={`container py-4 py-xl-5`}>
 				<div className={`row mb-5`}>
@@ -28,7 +27,6 @@ const Home = () => {
 				</div>
 			</div>
 		</section>
-
 	);
 };
 
