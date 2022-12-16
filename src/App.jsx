@@ -1,12 +1,16 @@
 
-import { useEffect } from "react";
+import { useEffect, useContext } from "react";
 import { Outlet, useLocation, useNavigate } from "react-router-dom";
-import Footer from "./Components/Footer";
+import { GlobalContext } from "./Contexts/GlobalContext";
+
 import Navbar from "./Components/Navbar";
+import Footer from "./Components/Footer";
 
 function App() {
 	const location = useLocation();
 	const navigate = useNavigate();
+	const { theme } = useContext(GlobalContext);
+	const isDarkMode = theme === "dark" || false;
 
 	useEffect(() => {
 		if (location.pathname === "/") {
@@ -17,9 +21,7 @@ function App() {
 
 	return (
 		<>
-			{/* //Na linha seguinte deverá ser feito um teste se a aplicação
-		// está em dark mode e deverá utilizar a classe dark ou light */}
-			<div className={`app light}`}>
+			<div className={`app ${isDarkMode ? "dark-theme" : "light-theme"}`}>
 				<Navbar />
 				<main>
 					<Outlet />

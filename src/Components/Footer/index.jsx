@@ -1,11 +1,18 @@
+import { useContext } from "react";
+import { GlobalContext } from "../../Contexts/GlobalContext";
+
 import styles from "./styles.module.css";
 
 const Footer = () => {
+	const { theme } = useContext(GlobalContext);
+	const isDarkMode = theme === "dark" || false;
+
+
 	const scrollToTop = () => {
 		window.scrollTo(0, 0)
 	}
 	return (
-		<footer>
+		<footer className={isDarkMode ? "bg-dark text-light" : "bg-light text-dark"}>
 			<button className={styles.top} onClick={scrollToTop}>
 				<svg className={`bi bi-chevron-up`} xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" fill="currentColor" viewBox="0 0 16 16">
 					<path fillRule="evenodd" d="M7.646 4.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1-.708.708L8 5.707l-5.646 5.647a.5.5 0 0 1-.708-.708l6-6z"></path>
@@ -19,7 +26,7 @@ const Footer = () => {
 				</div>
 				<div className={`row row-cols-1 row-cols-sm-2 row-cols-md-3 justify-content-center align-items-center`}>
 					<div className={`col text-center text-sm-center text-md-start my-1`}>
-						<img className={`${styles.dhLogo}`} src="/images/DH.png" alt='DH-logo' />
+						<img className={`${styles.dhLogo} ${isDarkMode ? (styles.dark) : ""}`} src="/images/DH.png" alt='DH-logo' />
 					</div>
 					<div className={`col text-center align-items-center my-1`}>
 						<p>Matheus Rayol Ferreira</p>

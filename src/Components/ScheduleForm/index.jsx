@@ -1,79 +1,117 @@
 import { useContext, useEffect, useState } from "react";
-import styles from "./styles.module.css";
+import { render } from "react-dom";
+import { GlobalContext } from "../../Contexts/GlobalContext";
+import { retrieveToken } from "../../Services/localStorage";
 
 const ScheduleForm = () => {
+
+	const [dentists, setDentists] = useState([]);
+	const [patients, setPatients] = useState([]);
+	const { theme } = useContext(GlobalContext);
+	const isDarkMode = theme === "dark" || false;
+
 	useEffect(() => {
-		//Nesse useEffect, você vai fazer um fetch na api buscando TODOS os dentistas
-		//e pacientes e carregar os dados em 2 estados diferentes
+		async function fetchData() {
+			try {
+				const [dentist, patient] = await Promise.all([
+					fetch(`https://dhodonto.ctdprojetos.com.br/dentista`),
+					fetch(`https://dhodonto.ctdprojetos.com.br/paciente`),
+				]);
+				const dentists = await dentist.json();
+				const patients = await patient.json();
+				setDentists(dentists);
+				setPatients(patients.body);
+			} catch (error) {
+				console.error(error.message);
+			}
+		}
+		fetchData();
 	}, []);
 
+
 	const handleSubmit = (event) => {
-		//Nesse handlesubmit você deverá usar o preventDefault,
-		//obter os dados do formulário e enviá-los no corpo da requisição 
-		//para a rota da api que marca a consulta
-		//lembre-se que essa rota precisa de um Bearer Token para funcionar.
-		//Lembre-se de usar um alerta para dizer se foi bem sucedido ou ocorreu um erro
+		event.preventDefault();
+
+		const formData = new FormData(event.target);
+		const data = Object.fromEntries(formData);
+		const token = retrieveToken();
+
+		try {
+			fetch("https://dhodonto.ctdprojetos.com.br/consulta", {
+				method: "POST",
+				headers: {
+					"Content-Type": "application/json",
+					Authorization: `Bearer ${token}`,
+				},
+				body: JSON.stringify({
+					dentista: {
+						matricula: data.dentist,
+					},
+					paciente: {
+						matricula: data.patient,
+					},
+					dataHoraAgendamento: data.appointmentDate,
+				}),
+			})
+				.then((response) => {
+					if (response.ok) {
+						render(<span style={{color: "blueviolet"}}>Consulta marcada com sucesso!</span>, document.getElementById("appointmentAlert"))
+						setTimeout(() => {
+							window.location.href="/";
+						}, 10000)
+					} else {
+						render(<span style={{color: "red"}}>Ocorreu um erro ao marcar a consulta. Tente novamente.</span>, document.getElementById("appointmentAlert"))
+					}
+				});
+		} catch (error) {
+			console.error(error.message);
+		}
+
 	};
 
 	return (
 		<>
-			{/* //Na linha seguinte deverá ser feito um teste se a aplicação
-		// está em dark mode e deverá utilizar o css correto */}
-			<div
-				className={`text-center container}`
-				}
-			>
-				<form onSubmit={handleSubmit}>
-					<div className={`row ${styles.rowSpacing}`}>
-						<div className="col-sm-12 col-lg-6">
-							<label htmlFor="dentist" className="form-label">
-								Dentist
-							</label>
-							<select className="form-select" name="dentist" id="dentist">
-								{/*Aqui deve ser feito um map para listar todos os dentistas*/}
-								<option key={'Matricula do dentista'} value={'Matricula do dentista'}>
-									{`Nome Sobrenome`}
-								</option>
-							</select>
-						</div>
-						<div className="col-sm-12 col-lg-6">
-							<label htmlFor="patient" className="form-label">
-								Patient
-							</label>
-							<select className="form-select" name="patient" id="patient">
-								{/*Aqui deve ser feito um map para listar todos os pacientes*/}
-								<option key={'Matricula do paciente'} value={'Matricula do paciente'}>
-									{`Nome Sobrenome`}
-								</option>
-							</select>
-						</div>
+			<form onSubmit={handleSubmit} className={isDarkMode ? "dark-theme" : "light-theme"}>
+				<div className={`row`}>
+					<div className={`col`}>
+						<p className={`text-center`}>Selecione o Dentista, o Paciente, a data e a hora para a consulta.</p>
 					</div>
-					<div className={`row ${styles.rowSpacing}`}>
-						<div className="col-12">
-							<label htmlFor="appointmentDate" className="form-label">
-								Date
-							</label>
-							<input
-								className="form-control"
-								id="appointmentDate"
-								name="appointmentDate"
-								type="datetime-local"
-							/>
-						</div>
+				</div>
+				<div className={`row pb-3`}>
+					<div className={`col-sm-12 col-lg-6`}>
+						<label className={`form-label`} htmlFor="dentist">Dentista</label>
+						<select className="form-select" name="dentist" id="dentist">
+							{
+								dentists.length > 0 && dentists.map((dentist) => (
+									<option key={dentist.matricula} value={dentist.matricula}>{dentist.nome} {dentist.sobrenome}</option>
+								))
+							}
+						</select>
 					</div>
-					<div className={`row ${styles.rowSpacing}`}>
-						{/* //Na linha seguinte deverá ser feito um teste se a aplicação
-		// está em dark mode e deverá utilizar o css correto */}
-						<button
-							className={`btn btn-light ${styles.button
-								}`}
-							type="submit"
-						>
-							Schedule
-						</button>
+					<div className={`col-sm-12 col-lg-6`}>
+						<label className={`form-label`} htmlFor="patient">Paciente</label>
+						<select className="form-select" name="patient" id="patient">
+							{
+								patients.length > 0 && patients.map((patient) => (
+									<option key={patient.matricula} value={patient.matricula}>{patient.nome} {patient.sobrenome}</option>
+								))
+							}
+						</select>
 					</div>
-				</form>
-			</div>
+				</div>
+				<div className={`row`}>
+					<div className={`col pb-3`}>
+						<label className={`form-label`} htmlFor="appointmentDate">Data / Hora da consulta</label>
+						<input className={`form-control`} aria-label="appointmentDate" id="appointmentDate" name="appointmentDate" type="datetime-local" />
+					</div>
+				</div>
+				<div className={`d-flex justify-content-center pb-3`} id="appointmentAlert">
+
+				</div>
+				<div className={`d-flex justify-content-end`}>
+					<button className={`btn btn-dhodonto`} data-testid="setAppointment" type="submit">Marcar consulta</button>
+				</div>
+			</form>
 		</>
 	);
 };

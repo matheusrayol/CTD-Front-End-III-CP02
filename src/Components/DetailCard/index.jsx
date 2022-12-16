@@ -4,8 +4,6 @@ import { GlobalContext } from "../../Contexts/GlobalContext";
 
 import ScheduleFormModal from "../ScheduleFormModal";
 
-import styles from "./styles.module.css";
-
 const DetailCard = () => {
 	const { id } = useParams();
 	const [dentista, setDentista] = useState(undefined);
@@ -26,7 +24,7 @@ const DetailCard = () => {
 		<>
 			{dentista ? (
 				<>
-					<section className={`mt-2d-grid align-items-center`} style={{ height: "80vh" }}>
+					<section className={`mt-2 d-grid align-items-center`} style={{ height: "80vh" }}>
 						<div className={`container`}>
 							<div className={`row`}>
 								<div className={`col-md-6 text-center`}>
@@ -37,19 +35,19 @@ const DetailCard = () => {
 										<span className={`underline pb-1`}>{dentista.nome}</span>
 									</h2>
 									<ul className={`list-group`}>
-										<li className={`list-group-item`}>
+										<li className={`list-group-item ${isDarkMode ? "dark-theme" : "light-theme"}`}>
 											Nome: <span>{dentista.nome}</span>
 										</li>
-										<li className={`list-group-item`}>
+										<li className={`list-group-item ${isDarkMode ? "dark-theme" : "light-theme"}`}>
 											Sobrenome: <span>{dentista.sobrenome}</span>
 										</li>
-										<li className={`list-group-item`}>
+										<li className={`list-group-item ${isDarkMode ? "dark-theme" : "light-theme"}`}>
 											Usuário: <span>{dentista.usuario.username}</span>
 										</li>
 									</ul>
 									<div className={`mb-3`}></div>
 									<div className={`text-center mb-5`}>
-										<button className={`btn shadow`} data-bs-toggle="modal" data-bs-target="#exampleModal">Marcar Consulta</button>
+										<button className={`btn btn-dhodonto`} data-bs-toggle="modal" data-bs-target="#makeAppointment" aria-label="schedule">Marcar Consulta</button>
 									</div>
 								</div>
 							</div>

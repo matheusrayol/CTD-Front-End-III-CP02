@@ -1,9 +1,9 @@
 .top {
-	border: 0;
-	background-color: blueviolet;
+	border: 1px solid #16161a;
+	background-color: #7f5af0;
 	color: white;
-	width: 40px;
-	height: 40px;
+	width: 50px;
+	height: 50px;
 	position: fixed;
 	bottom: 40px;
 	right: 40px;
@@ -14,6 +14,10 @@
 .dhLogo {
 	width: 300px;
 	max-width: 100%;
+}
+
+.dhLogo.dark {
+	filter:invert(100%);
 }
 
 .icon {
